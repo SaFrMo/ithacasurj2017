@@ -68,7 +68,7 @@
                 if( ! $err ){
                     $decoded_json = json_decode($response, true);
                     // expires in 5 minutes
-                    //set_transient( $transient_key, $decoded_json, 1 * 5 );
+                    set_transient( $transient_key, $decoded_json, 60 * 5 );
 
                     $events_list = $decoded_json;
                 } else {
