@@ -101,6 +101,10 @@
                     <a href="<?php echo $event['htmlLink']; ?>" target="_blank">More info...</a>
                 </p>
 
+                <p>
+                    <a href="/calendar">More events...</a>
+                </p>
+
             <?php echo ob_get_clean();
 
             if ( ! empty( $instance['after_date'] ) ) {
