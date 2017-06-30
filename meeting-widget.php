@@ -146,7 +146,7 @@
         public function update( $new_instance, $old_instance ) {
             $instance = array();
             $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-            $instance['after_date'] = ( ! empty( $new_instance['after_date'] ) ) ? strip_tags( $new_instance['after_date'] ) : '';
+            $instance['after_date'] = strip_tags( $new_instance['after_date'] );
 
             return $instance;
         }
