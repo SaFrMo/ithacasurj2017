@@ -4,3 +4,4 @@ This is the Wordpress theme for the [Ithaca chapter](http://ithacasurj.com) of [
 This theme is a child theme of [Ixion](https://wordpress.com/theme/ixion), with the following features added:
 
 * Auto-updating "Next Meeting" widget (`meeting-widget.php`)
+    * Fetches the next event from a given Google Calendar and includes a link to that event.
