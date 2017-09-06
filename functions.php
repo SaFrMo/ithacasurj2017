@@ -18,8 +18,16 @@
     }
     add_action('wp_enqueue_scripts', 'enqueue_surj_scripts');
 
+    // Register widget
+    add_action( 'widgets_init', function(){
+        register_widget( 'Submit_Events' );
+        register_widget( 'Next_Meeting' );
+    });
+
     // Get widgets
-    require_once('meeting-widget.php');
-    require_once('submit-widget.php');
+    require('meeting-widget.php');
+    require('submit-widget.php');
+
+
 
 ?>

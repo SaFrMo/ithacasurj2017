@@ -8,7 +8,7 @@
                 'classname' => 'submit_event',
                 'description' => 'Streamlined event submission process',
             );
-            parent::__construct( 'next_meeting', 'Submit Event', $widget_ops );
+            parent::__construct( 'submit_event', 'Submit Event', $widget_ops );
         }
 
         /**
@@ -20,7 +20,7 @@
         public function widget( $args, $instance ) {
 
             // Only show for admins
-            if( ! is_user_logged_in() ) return;
+            if( ! is_user_logged_in() ) return false;
 
             echo $args['before_widget'];
 
@@ -130,15 +130,7 @@
             return $instance;
         }
 
-
-
-
     }
-
-    // Register widget
-    add_action( 'widgets_init', function(){
-        register_widget( 'Submit_Events' );
-    });
 
     // Register endpoint
     add_action('wp_ajax_submit_surj_event', 'submit_surj_event');

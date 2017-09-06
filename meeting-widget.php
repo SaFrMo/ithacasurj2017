@@ -153,9 +153,4 @@
 
     }
 
-    // Register widget
-    add_action( 'widgets_init', function(){
-        register_widget( 'Next_Meeting' );
-    });
-
 ?>
