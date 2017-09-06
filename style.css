@@ -1,5 +1,5 @@
 /*
- Theme Name:   Ixion Child
+ Theme Name:   Ithaca SURJ
  Theme URI:    https://wordpresREADMEs.com/theme/ixion
  Description:  Ixion Child Theme for Ithaca SURJ
  Author:       Sander Moolin
@@ -11,3 +11,7 @@
  Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
  Text Domain:  ixion-child
 */
+
+.submit-event label {
+    display: block;
+}

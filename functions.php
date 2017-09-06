@@ -18,7 +18,8 @@
     }
     add_action('wp_enqueue_scripts', 'enqueue_surj_scripts');
 
-    // Get Next Meeting widget
+    // Get widgets
     require_once('meeting-widget.php');
+    require_once('submit-widget.php');
 
 ?>

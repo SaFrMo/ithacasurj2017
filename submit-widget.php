@@ -1,0 +1,104 @@
+<?php
+
+    // Prep calendar widget
+    class Submit_Events extends WP_Widget {
+
+        public function __construct() {
+            $widget_ops = array(
+                'classname' => 'submit_event',
+                'description' => 'Streamlined event submission process',
+            );
+            parent::__construct( 'next_meeting', 'Submit Event', $widget_ops );
+        }
+
+        /**
+         * Outputs the content of the widget
+         *
+         * @param array $args
+         * @param array $instance
+         */
+        public function widget( $args, $instance ) {
+            echo $args['before_widget'];
+
+            ob_start(); ?>
+
+                <h2>Submit Event</h2>
+
+                <p>Got an event you'd like Ithaca SURJ to publicize? Let us know!</p>
+
+                <form class="submit-event">
+
+                    <label for="event-title">Title</label>
+                    <input id="event-title" name="event-title" type="text"/>
+
+                    <label for="event-date">Date</label>
+                    <input id="event-date" name="event-date" type="date"/>
+
+                    <label for="event-time">Time</label>
+                    <input id="event-time" name="event-time" type="time"/>
+
+                    <label for="event-description">Description</label>
+                    <textarea id="event-description" name="event-description"></textarea>
+
+                    <label for="event-contact">Contact Email</label>
+                    <input id="event-contact" name="event-contact" type="email"/>
+
+                    <input type="submit" value="Submit!"/>
+
+                </form>
+
+            <?php
+
+            echo ob_get_clean();
+
+            echo $args['after_widget'];
+
+        }
+
+        /**
+         * Outputs the options form on admin
+         *
+         * @param array $instance The widget options
+         */
+        public function form( $instance ) {
+            $title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Submit Event', 'text_domain' );
+            $after_date = ! empty( $instance['after_date'] ) ? $instance['after_date'] : esc_html__( 'Test after info', 'text_domain' );
+            ?>
+
+                <p>
+                    <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label>
+                    <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+                </p>
+                <p>
+                    <label for="<?php echo esc_attr( $this->get_field_id( 'after_date' ) ); ?>"><?php esc_attr_e( 'Text after info:', 'text_domain' ); ?></label>
+                    <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'after_date' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'after_date' ) ); ?>" type="textfield" value="<?php echo esc_attr( $after_date ); ?>">
+                </p>
+
+            <?php
+        }
+
+        /**
+         * Processing widget options on save
+         *
+         * @param array $new_instance The new options
+         * @param array $old_instance The previous options
+         */
+        public function update( $new_instance, $old_instance ) {
+            $instance = array();
+            $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+            $instance['after_date'] = strip_tags( $new_instance['after_date'] );
+
+            return $instance;
+        }
+
+
+
+
+    }
+
+    // Register widget
+    add_action( 'widgets_init', function(){
+        register_widget( 'Submit_Events' );
+    });
+
+?>
