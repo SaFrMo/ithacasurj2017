@@ -17,3 +17,6 @@
 .submit-event input[type="submit"] {
     margin-top: 15px;
 }
+.submit-event .checks label {
+    display: inline-block;
+}

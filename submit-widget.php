@@ -18,18 +18,41 @@
          * @param array $instance
          */
         public function widget( $args, $instance ) {
+
+            // Only show for admins
+            if( ! is_user_logged_in() ) return;
+
             echo $args['before_widget'];
 
             ob_start(); ?>
 
                 <h2>Submit Event</h2>
 
-                <p>Got an event you'd like Ithaca SURJ to publicize? Let us know!</p>
+                <p>Only administrators can see this section. Enter an event's information here to have it promoted by Ithaca SURJ!</p>
 
-                <form class="submit-event">
+                <script>
+                    function submitSurjEvent(){
+
+                        // assumes jQuery is loaded
+                        jQuery.post(
+                            '<?php echo admin_url('admin-ajax.php'); ?>',
+                            jQuery('.submit-event').serialize(),
+                            function(data){
+                                console.log(data);
+                            }
+                        );
+
+                        return false;
+                    }
+                </script>
+
+                <form class="submit-event" onsubmit="return submitSurjEvent();">
 
                     <label for="event-title">Title</label>
                     <input id="event-title" name="event-title" type="text"/>
+
+                    <label for="event-location">Location</label>
+                    <input id="event-location" name="event-location" type="text"/>
 
                     <label for="event-date">Date</label>
                     <input id="event-date" name="event-date" type="date"/>
@@ -45,6 +68,19 @@
 
                     <label for="event-contact">Contact Email</label>
                     <input id="event-contact" name="event-contact" type="email"/>
+
+                    <h3>Submit to:</h3>
+
+                    <div class="checks">
+                        <input id="listserv" name="listserv" type="checkbox" checked/>
+                        <label for="listserv">Listserv</label><br/>
+
+                        <input id="facebook" name="facebook" type="checkbox" checked/>
+                        <label for="facebook">Facebook</label><br/>
+
+                        <input id="calendar" name="calendar" type="checkbox" checked/>
+                        <label for="calendar">Events Calendar</label><br/>
+                    </div>
 
                     <input type="submit" value="Submit!"/>
 
@@ -68,14 +104,14 @@
             $after_date = ! empty( $instance['after_date'] ) ? $instance['after_date'] : esc_html__( 'Test after info', 'text_domain' );
             ?>
 
-                <p>
+                <!-- <p>
                     <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label>
                     <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
                 </p>
                 <p>
                     <label for="<?php echo esc_attr( $this->get_field_id( 'after_date' ) ); ?>"><?php esc_attr_e( 'Text after info:', 'text_domain' ); ?></label>
                     <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'after_date' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'after_date' ) ); ?>" type="textfield" value="<?php echo esc_attr( $after_date ); ?>">
-                </p>
+                </p> -->
 
             <?php
         }
@@ -103,5 +139,12 @@
     add_action( 'widgets_init', function(){
         register_widget( 'Submit_Events' );
     });
+
+    // Register endpoint
+    add_action('wp_ajax_submit_surj_event', 'submit_surj_event');
+
+    function submit_surj_event(){
+
+    }
 
 ?>
