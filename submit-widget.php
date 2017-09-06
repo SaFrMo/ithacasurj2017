@@ -152,6 +152,27 @@
         $end_time = filter_var($_POST['event-finish-time'], FILTER_SANITIZE_STRING);
         $description = filter_var($_POST['event-description'], FILTER_SANITIZE_STRING);
         $email = filter_var($_POST['event-contact'], FILTER_SANITIZE_EMAIL);
+        $listserv_request = filter_var($_POST['listserv'], FILTER_SANITIZE_STRING) === 'on';
+        $facebook_request = filter_var($_POST['facebook'], FILTER_SANITIZE_STRING) === 'on';
+        $calendar_request = filter_var($_POST['calendar'], FILTER_SANITIZE_STRING) === 'on';
+
+        var_dump($_POST);
+
+        // construct links: TODO
+        $listserv_link = "#listserv";
+        $facebook_link = "#fb";
+
+        // construct calendar link
+        $calendar_link = "https://www.google.com/calendar/render?action=TEMPLATE";
+        $calendar_link .= "&text=" . urlencode($title);
+        $calendar_link .= "&details=" . urlencode($description . "\r\nContact: " . $email);
+        $calendar_link .= "&location=" . urlencode($location);
+        $calendar_link .= "&dates=" . urlencode(str_replace('-', '', $date));
+        $calendar_link .= "T" . urlencode(str_replace(':', '', $start_time)) . "00Z/";
+        $calendar_link .= urlencode(str_replace('-', '', $date));
+        $calendar_link .= "T" . urlencode(str_replace(':', '', $end_time)) . "00Z";
+        $calendar_link .= "&ctz=America/New_York";
+
 
         ob_start(); ?>
 
@@ -160,7 +181,18 @@
             Date: <?php echo $date; ?><br/>
             Times: <?php echo $start_time; ?> to <?php echo $end_time ?><br/>
             Description: <?php echo $description; ?><br/>
-            Email: <?php echo $email; ?><br/>
+            Email: <?php echo $email; ?><br/><br/>
+            Requested on:
+            <?php
+                if( $listserv_request ) echo 'Listserv ';
+                if( $facebook_request ) echo 'Facebook ';
+                if( $calendar_request ) echo 'Calendar ';
+            ?>
+
+
+            <br/>
+
+            <a href="<?php echo $calendar_link; ?>">Google Calendar</a>
 
 
         <?php $body = ob_get_clean();
