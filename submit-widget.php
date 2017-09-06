@@ -35,7 +35,7 @@
 
                         // assumes jQuery is loaded
                         jQuery.post(
-                            '<?php echo admin_url('admin-ajax.php'); ?>',
+                            '<?php echo admin_url('admin-ajax.php?action=submit_surj_event'); ?>',
                             jQuery('.submit-event').serialize(),
                             function(data){
                                 console.log(data);
@@ -144,6 +144,35 @@
     add_action('wp_ajax_submit_surj_event', 'submit_surj_event');
 
     function submit_surj_event(){
+
+        $title = filter_var($_POST['event-title'], FILTER_SANITIZE_STRING);
+        $location = filter_var($_POST['event-location'], FILTER_SANITIZE_STRING);
+        $date = filter_var($_POST['event-date'], FILTER_SANITIZE_STRING);
+        $start_time = filter_var($_POST['event-start-time'], FILTER_SANITIZE_STRING);
+        $end_time = filter_var($_POST['event-finish-time'], FILTER_SANITIZE_STRING);
+        $description = filter_var($_POST['event-description'], FILTER_SANITIZE_STRING);
+        $email = filter_var($_POST['event-contact'], FILTER_SANITIZE_EMAIL);
+
+        ob_start(); ?>
+
+            Title: <?php echo $title; ?><br/>
+            Location: <?php echo $location; ?><br/>
+            Date: <?php echo $date; ?><br/>
+            Times: <?php echo $start_time; ?> to <?php echo $end_time ?><br/>
+            Description: <?php echo $description; ?><br/>
+            Email: <?php echo $email; ?><br/>
+
+
+        <?php $body = ob_get_clean();
+
+        echo $body;
+
+        mail(
+            'sandermoolin@gmail.com',
+            'SURJ Event Submission: ' . $title,
+            $body,
+            'From: ithacasurj@gmail.com\r\nReply-To: ithacasurj@gmail.com\r\nX-Mailer: PHP/' . phpversion() . '\r\nContent-Type: text/plain'
+        );
 
     }
 
