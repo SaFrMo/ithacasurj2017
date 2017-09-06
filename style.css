@@ -1,6 +1,5 @@
 /*
  Theme Name:   Ithaca SURJ
- Theme URI:    https://wordpresREADMEs.com/theme/ixion
  Description:  Ixion Child Theme for Ithaca SURJ
  Author:       Sander Moolin
  Author URI:   http://sandermoolin.com
@@ -8,10 +7,13 @@
  Version:      1.0.0
  License:      GNU General Public License v2 or later
  License URI:  http://www.gnu.org/licenses/gpl-2.0.html
- Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
  Text Domain:  ixion-child
 */
 
+/* Event submission widget */
 .submit-event label {
     display: block;
+}
+.submit-event input[type="submit"] {
+    margin-top: 15px;
 }

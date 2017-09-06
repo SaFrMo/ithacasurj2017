@@ -34,8 +34,11 @@
                     <label for="event-date">Date</label>
                     <input id="event-date" name="event-date" type="date"/>
 
-                    <label for="event-time">Time</label>
-                    <input id="event-time" name="event-time" type="time"/>
+                    <label for="event-start-time">Start Time</label>
+                    <input id="event-start-time" name="event-start-time" type="time"/>
+
+                    <label for="event-finish-time">Finish Time</label>
+                    <input id="event-finish-time" name="event-finish-time" type="time"/>
 
                     <label for="event-description">Description</label>
                     <textarea id="event-description" name="event-description"></textarea>
