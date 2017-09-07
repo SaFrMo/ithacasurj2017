@@ -142,7 +142,7 @@
         $date = filter_var($_POST['event-date'], FILTER_SANITIZE_STRING);
         $start_time = filter_var($_POST['event-start-time'], FILTER_SANITIZE_STRING);
         $end_time = filter_var($_POST['event-finish-time'], FILTER_SANITIZE_STRING);
-        $description = filter_var($_POST['event-description'], FILTER_SANITIZE_STRING);
+        $description = str_replace(PHP_EOL, '<br/>', filter_var($_POST['event-description'], FILTER_SANITIZE_STRING));
         $email = filter_var($_POST['event-contact'], FILTER_SANITIZE_EMAIL);
         $listserv_request = filter_var($_POST['listserv'], FILTER_SANITIZE_STRING) === 'on';
         $facebook_request = filter_var($_POST['facebook'], FILTER_SANITIZE_STRING) === 'on';
@@ -151,8 +151,6 @@
         // Adds 400 to times to account for NY time zone, pads strings
         $start_time_param = str_pad(str_replace(':', '', $start_time) + 400, 4, '0', STR_PAD_LEFT);
         $end_time_param = str_pad(str_replace(':', '', $end_time) + 400, 4, '0', STR_PAD_LEFT);
-
-        var_dump($_POST);
 
         // construct links: TODO
         $listserv_link = "#listserv";
@@ -178,33 +176,42 @@
 
         ob_start(); ?>
 
-            Title: <?php echo $title; ?><br/>
-            Location: <?php echo $location; ?><br/>
-            Date: <?php echo $date; ?><br/>
-            Times: <?php echo $start_time; ?> to <?php echo $end_time ?><br/>
-            Description: <?php echo $description; ?><br/>
-            Email: <?php echo $email; ?><br/><br/>
-            Requested on:
+<?php echo $title; ?><br/>
+<?php echo $location; ?><br/>
+<?php echo $date; ?><br/>
+<?php echo $start_time; ?> to <?php echo $end_time; ?><br/>
+<?php echo $description; ?><br/>
+<?php echo $email; ?><br/>
+
+        <?php
+
+            $mail_body = ob_get_clean();
+
+            ob_start();
+
+        ?>
+
+            <?php echo $mail_body; ?>
+            Requested on:<br/>
             <?php
-                if( $listserv_request ) echo '- Listserv ';
-                if( $facebook_request ) echo '- Facebook ';
-                if( $calendar_request ) echo '- Calendar ';
+                if( $listserv_request ) echo '- Listserv <br/>';
+                if( $facebook_request ) echo '- Facebook <br/>';
+                if( $calendar_request ) echo '- Calendar <br/>';
             ?>
 
             <a href="<?php echo $calendar_link; ?>">Google Calendar</a>
 
+            <a href="mailto:ithaca-surj@googlegroups.com?subject=<?php echo $title . ' on ' . $date; ?>&body=<?php echo str_replace('<br/>', '%0D%0A', $mail_body); ?>">Listserv</a>
 
 
 
         <?php $body = ob_get_clean();
 
-        echo $body;
-
-        mail(
+        wp_mail(
             'sandermoolin@gmail.com',
             'SURJ Event Submission: ' . $title,
             $body,
-            'From: ithacasurj@gmail.com\r\nReply-To: ithacasurj@gmail.com\r\nX-Mailer: PHP/' . phpversion() . '\r\nContent-Type: text/plain'
+            array('Content-Type: text/html; charset=UTF-8')
         );
 
     }
