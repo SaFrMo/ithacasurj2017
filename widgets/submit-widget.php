@@ -148,6 +148,9 @@
         $facebook_request = filter_var($_POST['facebook'], FILTER_SANITIZE_STRING) === 'on';
         $calendar_request = filter_var($_POST['calendar'], FILTER_SANITIZE_STRING) === 'on';
 
+        $start_time_slug = str_pad(str_replace(':', '', $start_time) + 400, 4, '0', STR_PAD_LEFT);
+        $end_time_param = str_pad(str_replace(':', '', $end_time) + 400, 4, '0', STR_PAD_LEFT);
+
         var_dump($_POST);
 
         // construct links: TODO
@@ -156,14 +159,20 @@
 
         // construct calendar link
         $calendar_link = "https://www.google.com/calendar/render?action=TEMPLATE";
+        // title
         $calendar_link .= "&text=" . urlencode($title);
+        // details (adds "Contact: [contact email]")
         $calendar_link .= "&details=" . urlencode($description . "\r\nContact: " . $email);
+        // location
         $calendar_link .= "&location=" . urlencode($location);
+        // start date
         $calendar_link .= "&dates=" . urlencode(str_replace('-', '', $date));
-        $calendar_link .= "T" . urlencode(str_replace(':', '', $start_time)) . "00Z/";
+        // start time
+        $calendar_link .= "T" . urlencode($start_time_slug) . "00Z/";
+        // end date
         $calendar_link .= urlencode(str_replace('-', '', $date));
-        $calendar_link .= "T" . urlencode(str_replace(':', '', $end_time)) . "00Z";
-        $calendar_link .= "&ctz=America/New_York";
+        // end time
+        $calendar_link .= "T" . urlencode($end_time_param) . "00Z";
 
 
         ob_start(); ?>
@@ -199,5 +208,10 @@
         );
 
     }
+
+    // Register widget
+    add_action( 'widgets_init', function(){
+        register_widget( 'Submit_Events' );
+    });
 
 ?>
