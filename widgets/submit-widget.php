@@ -192,17 +192,19 @@
         ?>
 
             <?php echo $mail_body; ?>
-            Requested on:<br/>
+            <br/><br/>Requested on:<br/>
             <?php
                 if( $listserv_request ) echo '- Listserv <br/>';
                 if( $facebook_request ) echo '- Facebook <br/>';
-                if( $calendar_request ) echo '- Calendar <br/>';
+                if( $calendar_request ) echo '- Google Calendar <br/>';
             ?>
-
-            <a href="<?php echo $calendar_link; ?>">Google Calendar</a>
+            <br/>
 
             <a href="mailto:ithaca-surj@googlegroups.com?subject=<?php echo $title . ' on ' . $date; ?>&body=<?php echo str_replace('<br/>', '%0D%0A', $mail_body); ?>">Listserv</a>
 
+            <br/><a href="https://www.facebook.com/events/upcoming" target="_blank">Facebook</a>
+
+            <br/><a href="<?php echo $calendar_link; ?>">Google Calendar</a><br/>
 
 
         <?php $body = ob_get_clean();
