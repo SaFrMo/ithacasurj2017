@@ -20,3 +20,6 @@
 .submit-event .checks label {
     display: inline-block;
 }
+.submitted-thanks {
+    display: none;
+}

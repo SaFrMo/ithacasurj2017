@@ -14,7 +14,11 @@
 
     // Prep scripts
     function enqueue_surj_scripts() {
+        
+        wp_register_script('site', get_stylesheet_directory_uri() . '/widgets/js/submit-event-widget.js', 'jquery', '1.0' );
+
         wp_enqueue_script('jquery');
+        wp_enqueue_script('site', 'jquery');
     }
     add_action('wp_enqueue_scripts', 'enqueue_surj_scripts');
 

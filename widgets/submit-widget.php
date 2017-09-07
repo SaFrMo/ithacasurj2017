@@ -28,63 +28,71 @@
 
                 <h2>Submit Event</h2>
 
-                <p>Only administrators can see this section. Enter an event's information here to have it promoted by Ithaca SURJ!</p>
+                <div class="form-wrap">
 
-                <script>
-                    function submitSurjEvent(){
+                    <p>Only administrators can see this section. Enter an event's information here to have it promoted by Ithaca SURJ!</p>
 
-                        // assumes jQuery is loaded
-                        jQuery.post(
-                            '<?php echo admin_url('admin-ajax.php?action=submit_surj_event'); ?>',
-                            jQuery('.submit-event').serialize(),
-                            function(data){
-                                console.log(data);
-                            }
-                        );
+                    <script>
+                        function submitSurjEvent(){
 
-                        return false;
-                    }
-                </script>
+                            // assumes jQuery is loaded
+                            jQuery.post(
+                                '<?php echo admin_url('admin-ajax.php?action=submit_surj_event'); ?>',
+                                jQuery('.submit-event').serialize(),
+                                function(data){
+                                    console.log(data);
+                                }
+                            );
 
-                <form class="submit-event" onsubmit="return submitSurjEvent();">
+                            return false;
+                        }
+                    </script>
 
-                    <label for="event-title">Title</label>
-                    <input id="event-title" name="event-title" type="text"/>
+                    <form class="submit-event" onsubmit="return submitSurjEvent();">
 
-                    <label for="event-location">Location</label>
-                    <input id="event-location" name="event-location" type="text"/>
+                        <label for="event-title">Title</label>
+                        <input id="event-title" name="event-title" type="text"/>
 
-                    <label for="event-date">Date</label>
-                    <input id="event-date" name="event-date" type="date"/>
+                        <label for="event-location">Location</label>
+                        <input id="event-location" name="event-location" type="text"/>
 
-                    <label for="event-start-time">Start Time</label>
-                    <input id="event-start-time" name="event-start-time" type="time"/>
+                        <label for="event-date">Date</label>
+                        <input id="event-date" name="event-date" type="date"/>
 
-                    <label for="event-finish-time">Finish Time</label>
-                    <input id="event-finish-time" name="event-finish-time" type="time"/>
+                        <label for="event-start-time">Start Time</label>
+                        <input id="event-start-time" name="event-start-time" type="time"/>
 
-                    <label for="event-description">Description</label>
-                    <textarea id="event-description" name="event-description"></textarea>
+                        <label for="event-finish-time">Finish Time</label>
+                        <input id="event-finish-time" name="event-finish-time" type="time"/>
 
-                    <label for="event-contact">Contact Email</label>
-                    <input id="event-contact" name="event-contact" type="email"/>
+                        <label for="event-description">Description</label>
+                        <textarea id="event-description" name="event-description"></textarea>
 
-                    <h3>Submit to:</h3>
+                        <label for="event-contact">Contact Email</label>
+                        <input id="event-contact" name="event-contact" type="email"/>
 
-                    <div class="checks">
-                        <input id="listserv" name="listserv" type="checkbox" checked/>
-                        <label for="listserv">Listserv</label><br/>
+                        <h3>Submit to:</h3>
 
-                        <input id="facebook" name="facebook" type="checkbox" checked/>
-                        <label for="facebook">Facebook</label><br/>
+                        <div class="checks">
+                            <input id="listserv" name="listserv" type="checkbox" checked/>
+                            <label for="listserv">Listserv</label><br/>
 
-                        <input id="calendar" name="calendar" type="checkbox" checked/>
-                        <label for="calendar">Events Calendar</label><br/>
-                    </div>
+                            <input id="facebook" name="facebook" type="checkbox" checked/>
+                            <label for="facebook">Facebook</label><br/>
 
-                    <input type="submit" value="Submit!"/>
+                            <input id="calendar" name="calendar" type="checkbox" checked/>
+                            <label for="calendar">Events Calendar</label><br/>
+                        </div>
 
-                </form>
+                        <input type="submit" value="Submit!"/>
+
+                    </form>
+
+                </div>
+
+                <div class="submitted-thanks">
+                    <p>Thank you! Your event has been submitted.</p>
+                </div>
 
             <?php
 
