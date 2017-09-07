@@ -148,7 +148,8 @@
         $facebook_request = filter_var($_POST['facebook'], FILTER_SANITIZE_STRING) === 'on';
         $calendar_request = filter_var($_POST['calendar'], FILTER_SANITIZE_STRING) === 'on';
 
-        $start_time_slug = str_pad(str_replace(':', '', $start_time) + 400, 4, '0', STR_PAD_LEFT);
+        // Adds 400 to times to account for NY time zone, pads strings
+        $start_time_param = str_pad(str_replace(':', '', $start_time) + 400, 4, '0', STR_PAD_LEFT);
         $end_time_param = str_pad(str_replace(':', '', $end_time) + 400, 4, '0', STR_PAD_LEFT);
 
         var_dump($_POST);
@@ -168,7 +169,7 @@
         // start date
         $calendar_link .= "&dates=" . urlencode(str_replace('-', '', $date));
         // start time
-        $calendar_link .= "T" . urlencode($start_time_slug) . "00Z/";
+        $calendar_link .= "T" . urlencode($start_time_param) . "00Z/";
         // end date
         $calendar_link .= urlencode(str_replace('-', '', $date));
         // end time
@@ -185,15 +186,14 @@
             Email: <?php echo $email; ?><br/><br/>
             Requested on:
             <?php
-                if( $listserv_request ) echo 'Listserv ';
-                if( $facebook_request ) echo 'Facebook ';
-                if( $calendar_request ) echo 'Calendar ';
+                if( $listserv_request ) echo '- Listserv ';
+                if( $facebook_request ) echo '- Facebook ';
+                if( $calendar_request ) echo '- Calendar ';
             ?>
 
-
-            <br/>
-
             <a href="<?php echo $calendar_link; ?>">Google Calendar</a>
+
+
 
 
         <?php $body = ob_get_clean();
