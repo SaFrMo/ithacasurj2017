@@ -68,6 +68,9 @@
                         <label for="event-description">Description</label>
                         <textarea id="event-description" name="event-description"></textarea>
 
+                        <label for="event-website">Website</label>
+                        <input id="event-website" name="event-website" />
+
                         <label for="event-contact">Contact Email</label>
                         <input id="event-contact" name="event-contact" type="email"/>
 
@@ -151,6 +154,7 @@
         $start_time = filter_var($_POST['event-start-time'], FILTER_SANITIZE_STRING);
         $end_time = filter_var($_POST['event-finish-time'], FILTER_SANITIZE_STRING);
         $description = str_replace(PHP_EOL, '<br/>', filter_var($_POST['event-description'], FILTER_SANITIZE_STRING));
+        $website = filter_var($_POST['event-website'], FILTER_SANITIZE_STRING);
         $email = filter_var($_POST['event-contact'], FILTER_SANITIZE_EMAIL);
         $listserv_request = filter_var($_POST['listserv'], FILTER_SANITIZE_STRING) === 'on';
         $facebook_request = filter_var($_POST['facebook'], FILTER_SANITIZE_STRING) === 'on';
@@ -169,7 +173,7 @@
         // title
         $calendar_link .= "&text=" . urlencode($title);
         // details (adds "Contact: [contact email]")
-        $calendar_link .= "&details=" . urlencode($description . "\r\nContact: " . $email);
+        $calendar_link .= "&details=" . urlencode($description . "\r\nContact: " . $email . "\r\nWebsite: " . $website);
         // location
         $calendar_link .= "&location=" . urlencode($location);
         // start date
@@ -189,6 +193,7 @@
 <?php echo $date; ?><br/>
 <?php echo $start_time; ?> to <?php echo $end_time; ?><br/>
 <?php echo $description; ?><br/>
+<?php echo $website; ?><br/>
 <?php echo $email; ?><br/>
 
         <?php
